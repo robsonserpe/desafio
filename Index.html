@@ -1,0 +1,938 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafio do Técnico</title>
+
+<style>
+:root {
+    --navy: #071b35;
+    --blue: #0877d1;
+    --cyan: #20c5dc;
+    --green: #19a974;
+    --red: #df4b55;
+    --ink: #172b45;
+    --muted: #64748b;
+    --paper: #f2f6fb;
+    --line: #dce5ef;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at top right, #d9f5fb, transparent 32%), var(--paper);
+}
+
+header {
+    color: white;
+    background: linear-gradient(115deg, #06172d, #0b3d70 68%, #0877a8);
+    padding: 24px 18px 30px;
+    border-bottom: 5px solid var(--cyan);
+}
+
+.top, main {
+    max-width: 1050px;
+    margin: auto;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #ffffff18;
+    border: 1px solid #ffffff40;
+    font-size: 25px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #83e8f2;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 4px 0;
+    font-size: clamp(25px, 5vw, 38px);
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #d9eafa;
+    max-width: 700px;
+    line-height: 1.5;
+}
+
+main {
+    padding: 22px 16px 45px;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat, .panel {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 5px 18px #0b31500b;
+}
+
+.stat {
+    padding: 15px 17px;
+}
+
+.stat small {
+    display: block;
+    color: var(--muted);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 26px;
+    margin-top: 5px;
+    color: var(--navy);
+}
+
+.progress-wrap {
+    background: #dce7f1;
+    height: 9px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    transition: width .3s;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(230px, .8fr);
+    gap: 16px;
+    align-items: start;
+    margin-top: 16px;
+}
+
+.panel {
+    padding: 22px;
+}
+
+.mission-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    display: inline-block;
+    border-radius: 30px;
+    padding: 6px 10px;
+    background: #e8f4ff;
+    color: #075b9d;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.mission-number {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: bold;
+}
+
+h2 {
+    margin: 15px 0 8px;
+    color: var(--navy);
+    font-size: 24px;
+}
+
+.scenario {
+    line-height: 1.65;
+    color: #40536a;
+}
+
+.visual {
+    min-height: 110px;
+    border-radius: 14px;
+    padding: 18px;
+    margin: 16px 0;
+    background: linear-gradient(120deg, #eaf5ff, #e9fbfc);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid #d5eaf5;
+}
+
+.visual .emoji {
+    font-size: 43px;
+}
+
+.visual strong {
+    display: block;
+    color: #0a3c67;
+    margin-bottom: 5px;
+}
+
+.visual span {
+    color: #526b83;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.question {
+    font-weight: bold;
+    margin: 18px 0 12px;
+}
+
+.answers {
+    display: grid;
+    gap: 10px;
+}
+
+.answer {
+    width: 100%;
+    text-align: left;
+    padding: 13px 15px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: white;
+    color: var(--ink);
+    font-size: 15px;
+    cursor: pointer;
+    transition: .15s;
+    display: flex;
+    gap: 11px;
+    align-items: center;
+}
+
+.answer:hover:not(:disabled) {
+    border-color: var(--blue);
+    background: #f4faff;
+    transform: translateY(-1px);
+}
+
+.answer:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.letter {
+    width: 27px;
+    height: 27px;
+    flex: 0 0 27px;
+    border-radius: 8px;
+    background: #edf2f7;
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+    color: #486078;
+}
+
+.answer.correct {
+    border: 2px solid var(--green);
+    background: #effbf5;
+}
+
+.answer.wrong {
+    border: 2px solid var(--red);
+    background: #fff3f3;
+}
+
+.feedback {
+    display: none;
+    margin-top: 15px;
+    padding: 13px 15px;
+    border-radius: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.good {
+    background: #eaf9f1;
+    color: #126b49;
+    border: 1px solid #bce9d1;
+}
+
+.feedback.bad {
+    background: #fff0f0;
+    color: #9c3038;
+    border: 1px solid #f3c7ca;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+button.primary, button.secondary {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button.primary {
+    background: var(--blue);
+    color: white;
+}
+
+button.primary:hover {
+    background: #0564b3;
+}
+
+button.secondary {
+    background: #eaf0f6;
+    color: #29445f;
+}
+
+button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.side h3 {
+    margin: 0 0 12px;
+    color: var(--navy);
+}
+
+.side p, .side li {
+    color: #5a6d82;
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.side ul {
+    padding-left: 19px;
+}
+
+.tip {
+    background: #f0f8ff;
+    border-left: 4px solid var(--cyan);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 14px;
+}
+
+.bot {
+    font-size: 26px;
+    margin-right: 7px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.center {
+    text-align: center;
+}
+
+.final-score {
+    font-size: 54px;
+    font-weight: 800;
+    color: var(--blue);
+    margin: 12px 0;
+}
+
+footer {
+    text-align: center;
+    color: #8292a4;
+    font-size: 12px;
+    padding: 0 15px 25px;
+}
+
+@media(max-width:720px) {
+    .game {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard {
+        gap: 7px;
+    }
+
+    .stat {
+        padding: 12px 10px;
+    }
+
+    .stat strong {
+        font-size: 21px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="top">
+        <div class="brand">
+            <div class="brand-icon">🛠️</div>
+            <div>
+                <div class="eyebrow">Laboratório de tecnologia</div>
+                <h1>Desafio do Técnico</h1>
+            </div>
+        </div>
+
+        <p>
+            Investigue problemas, escolha soluções e descubra como
+            hardware, software e inteligência artificial podem trabalhar juntos.
+        </p>
+    </div>
+</header>
+
+<main>
+
+    <section class="dashboard">
+        <div class="stat">
+            <small>Pontuação</small>
+            <strong id="score">0</strong>
+        </div>
+
+        <div class="stat">
+            <small>Missão</small>
+            <strong id="missionCount">1/8</strong>
+        </div>
+
+        <div class="stat">
+            <small>Acertos</small>
+            <strong id="hits">0</strong>
+        </div>
+    </section>
+
+    <div class="progress-wrap">
+        <div id="progress"></div>
+    </div>
+
+    <section id="gameArea" class="game">
+
+        <article class="panel">
+
+            <div class="mission-top">
+                <span class="tag" id="category">HARDWARE</span>
+                <span class="mission-number" id="missionLabel">MISSÃO 01</span>
+            </div>
+
+            <h2 id="title"></h2>
+
+            <p class="scenario" id="scenario"></p>
+
+            <div class="visual">
+                <div class="emoji" id="emoji">🖥️</div>
+
+                <div>
+                    <strong id="visualTitle"></strong>
+                    <span id="visualText"></span>
+                </div>
+            </div>
+
+            <div class="question" id="question"></div>
+
+            <div class="answers" id="answers"></div>
+
+            <div id="feedback" class="feedback" role="status"></div>
+
+            <div class="actions">
+                <button class="secondary" id="restartSmall">
+                    ↻ Reiniciar
+                </button>
+
+                <button class="primary" id="nextBtn" disabled>
+                    Próxima missão →
+                </button>
+            </div>
+
+        </article>
+
+        <aside class="panel side">
+
+            <h3><span class="bot">🤖</span>Central de apoio</h3>
+
+            <p>
+                Você é o técnico responsável. Leia o chamado,
+                observe as pistas e selecione a alternativa que
+                melhor resolve a situação.
+            </p>
+
+            <div class="tip">
+                <strong>📌 Regras do desafio</strong>
+
+                <ul>
+                    <li>Resposta correta: <b>+10 pontos</b>.</li>
+                    <li>Resposta incorreta: <b>-5 pontos</b>.</li>
+                    <li>Cada missão só pode ser respondida uma vez.</li>
+                    <li>Leia a explicação após responder.</li>
+                </ul>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Dica de programação</strong>
+
+                <p>
+                    O JavaScript controla as perguntas, verifica
+                    a alternativa escolhida e atualiza a pontuação.
+                </p>
+            </div>
+
+            <div class="tip">
+                <strong>🧠 IA com responsabilidade</strong>
+
+                <p>
+                    Assistentes de IA podem ajudar a organizar tarefas,
+                    explicar assuntos e sugerir caminhos. Pessoas devem
+                    conferir informações importantes e proteger seus dados.
+                </p>
+            </div>
+
+        </aside>
+    </section>
+
+    <section id="endArea" class="panel center hidden">
+
+        <div style="font-size:55px">🏆</div>
+
+        <h2>Missões concluídas!</h2>
+
+        <p>Você terminou o expediente no laboratório de tecnologia.</p>
+
+        <div class="final-score" id="finalScore">0</div>
+
+        <p id="finalMessage"></p>
+
+        <button class="primary" id="restartFinal">
+            Jogar novamente
+        </button>
+
+    </section>
+
+</main>
+
+<footer>
+    Atividade educativa • Hardware • Software • Inteligência Artificial
+</footer>
+
+<script>
+
+// BANCO DE MISSÕES DO JOGO
+
+const missions = [
+
+{
+    category: "HARDWARE",
+    title: "O computador não liga",
+    emoji: "🔌",
+    visualTitle: "Chamado #001 — Estação sem energia",
+    visualText: "O computador não apresenta luzes nem sinais de funcionamento.",
+    scenario: "Uma pessoa aperta o botão de ligar, mas nada acontece. Antes de pensar em defeito interno, é importante verificar os itens mais simples.",
+    question: "Qual deve ser a primeira verificação?",
+    options: [
+        "Verificar se o cabo de energia está conectado e se a tomada funciona.",
+        "Formatar o computador imediatamente.",
+        "Apagar os arquivos temporários.",
+        "Trocar o papel de parede."
+    ],
+    answer: 0,
+    explanation: "Correto! Verificar a alimentação elétrica e as conexões externas é um primeiro passo simples e seguro. Formatar o sistema não resolveria a falta de energia."
+},
+
+{
+    category: "HARDWARE",
+    title: "Computador liga, mas não aparece imagem",
+    emoji: "🖥️",
+    visualTitle: "Chamado #002 — Tela sem imagem",
+    visualText: "O gabinete parece ligado, mas o monitor está escuro.",
+    scenario: "O computador apresenta sinais de funcionamento, porém o monitor não mostra imagem. O técnico precisa começar pelas conexões e configurações básicas.",
+    question: "Qual alternativa faz mais sentido investigar primeiro?",
+    options: [
+        "Aumentar o volume dos alto-falantes.",
+        "Conferir se o monitor está ligado e se o cabo de vídeo está conectado corretamente.",
+        "Excluir documentos da pasta Downloads.",
+        "Alterar a senha do usuário."
+    ],
+    answer: 1,
+    explanation: "Isso mesmo! Conferir a energia do monitor, a entrada selecionada e o cabo de vídeo ajuda a localizar problemas simples de conexão."
+},
+
+{
+    category: "SOFTWARE",
+    title: "O computador está muito lento",
+    emoji: "🐢",
+    visualTitle: "Chamado #003 — Lentidão",
+    visualText: "Os programas demoram para abrir e o computador responde devagar.",
+    scenario: "Uma pessoa relata que o computador ficou lento. Há muitos programas abertos e várias janelas iniciam junto com o sistema.",
+    question: "Qual ação inicial é mais adequada?",
+    options: [
+        "Instalar vários programas desconhecidos.",
+        "Desligar o monitor e continuar usando.",
+        "Verificar os programas abertos e os que iniciam automaticamente.",
+        "Compartilhar a senha com um colega."
+    ],
+    answer: 2,
+    explanation: "Correto! Observar os programas em execução e os que iniciam com o sistema pode ajudar a identificar o que está consumindo recursos."
+},
+
+{
+    category: "REDE",
+    title: "Sem conexão com a internet",
+    emoji: "🌐",
+    visualTitle: "Chamado #004 — Rede indisponível",
+    visualText: "O navegador informa que não foi possível acessar a página.",
+    scenario: "Um estudante não consegue abrir sites. Outras pessoas também relatam dificuldade de conexão na mesma rede.",
+    question: "Qual é uma boa primeira atitude?",
+    options: [
+        "Apagar todos os arquivos do computador.",
+        "Verificar a conexão Wi-Fi/cabo e observar se o roteador indica conexão.",
+        "Enviar a senha da rede em uma rede social.",
+        "Desinstalar o teclado."
+    ],
+    answer: 1,
+    explanation: "Muito bem! Conferir a conexão do dispositivo e os indicadores do roteador ajuda a entender se o problema está no computador ou na rede."
+},
+
+{
+    category: "SEGURANÇA DIGITAL",
+    title: "Uma mensagem suspeita",
+    emoji: "🛡️",
+    visualTitle: "Chamado #005 — Link desconhecido",
+    visualText: "Uma mensagem promete um prêmio e pede senha e dados pessoais.",
+    scenario: "Chega uma mensagem inesperada com um link. Ela diz que a conta será bloqueada se a pessoa não informar seus dados imediatamente.",
+    question: "Como agir com mais segurança?",
+    options: [
+        "Clicar rapidamente para não perder o prêmio.",
+        "Informar a senha para confirmar a identidade.",
+        "Encaminhar a mensagem para todos os contatos.",
+        "Não clicar, verificar o remetente e procurar o serviço pelo endereço oficial."
+    ],
+    answer: 3,
+    explanation: "Perfeito! Mensagens urgentes que pedem dados podem ser tentativas de golpe. Acesse serviços digitando o endereço oficial e nunca compartilhe senhas."
+},
+
+{
+    category: "INTELIGÊNCIA ARTIFICIAL",
+    title: "O assistente de IA",
+    emoji: "🤖",
+    visualTitle: "Chamado #006 — Muitas tarefas, pouco tempo",
+    visualText: "Uma equipe precisa organizar tarefas e preparar um resumo.",
+    scenario: "Uma equipe usa um assistente de IA para resumir textos, organizar uma lista de tarefas e sugerir um cronograma. A ferramenta apresenta uma resposta, mas pode cometer erros.",
+    question: "Qual é a melhor forma de usar esse assistente?",
+    options: [
+        "Aceitar tudo sem ler, porque a IA nunca erra.",
+        "Enviar senhas e dados pessoais para receber respostas melhores.",
+        "Usar as sugestões como apoio, conferir informações e não compartilhar dados sensíveis.",
+        "Deixar a IA tomar todas as decisões sem supervisão."
+    ],
+    answer: 2,
+    explanation: "Excelente! A IA pode agilizar tarefas e apoiar decisões, mas seus resultados precisam ser avaliados por pessoas. Privacidade e conferência continuam importantes."
+},
+
+{
+    category: "INTELIGÊNCIA ARTIFICIAL",
+    title: "Bots que ajudam no dia a dia",
+    emoji: "💬",
+    visualTitle: "Chamado #007 — Atendimento mais rápido",
+    visualText: "Uma loja quer responder dúvidas frequentes de clientes.",
+    scenario: "Uma organização pensa em usar um bot para responder perguntas comuns, informar horários e encaminhar casos complexos para uma pessoa.",
+    question: "Qual proposta é mais responsável e útil?",
+    options: [
+        "O bot deve se identificar como assistente virtual, proteger os dados e permitir atendimento humano quando necessário.",
+        "O bot deve fingir ser uma pessoa e pedir a senha dos clientes.",
+        "O bot deve publicar todas as conversas para mostrar transparência.",
+        "O bot deve inventar respostas quando não souber."
+    ],
+    answer: 0,
+    explanation: "Isso mesmo! Bots podem agilizar atendimentos, mas devem ser transparentes, proteger informações e encaminhar situações que precisam de julgamento humano."
+},
+
+{
+    category: "DESAFIO FINAL",
+    title: "O técnico do futuro",
+    emoji: "🚀",
+    visualTitle: "Chamado #008 — Tecnologia trabalhando em equipe",
+    visualText: "Um laboratório combina computadores, programas e ferramentas de IA.",
+    scenario: "Você precisa propor uma solução para um laboratório escolar. A equipe quer computadores funcionando bem, arquivos organizados e ajuda rápida para dúvidas comuns.",
+    question: "Qual solução combina melhor tecnologia e responsabilidade?",
+    options: [
+        "Usar um único computador para tudo e não fazer cópias de segurança.",
+        "Manter equipamentos e programas atualizados, fazer cópias de segurança e usar IA como apoio com revisão humana.",
+        "Instalar qualquer programa encontrado na internet.",
+        "Permitir que qualquer pessoa acesse as contas de todos."
+    ],
+    answer: 1,
+    explanation: "Missão cumprida! Um ambiente confiável combina manutenção, atualização, cópias de segurança, cuidado com dados e uso consciente da IA."
+}
+
+];
+
+// VARIÁVEIS DO JOGO
+
+let current = 0;
+let score = 0;
+let hits = 0;
+let answered = false;
+
+const $ = (id) => document.getElementById(id);
+
+
+// MOSTRAR MISSÃO
+
+function renderMission() {
+
+    const m = missions[current];
+
+    answered = false;
+
+    $("category").textContent = m.category;
+
+    $("missionLabel").textContent =
+        `MISSÃO ${String(current + 1).padStart(2, "0")}`;
+
+    $("missionCount").textContent =
+        `${current + 1}/${missions.length}`;
+
+    $("title").textContent = m.title;
+    $("scenario").textContent = m.scenario;
+    $("emoji").textContent = m.emoji;
+    $("visualTitle").textContent = m.visualTitle;
+    $("visualText").textContent = m.visualText;
+    $("question").textContent = m.question;
+
+    $("feedback").className = "feedback";
+    $("feedback").textContent = "";
+
+    $("nextBtn").disabled = true;
+
+    $("nextBtn").textContent =
+        current === missions.length - 1
+        ? "Ver resultado →"
+        : "Próxima missão →";
+
+    $("answers").innerHTML = "";
+
+    m.options.forEach((option, index) => {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "answer";
+
+        const letter = document.createElement("span");
+        letter.className = "letter";
+        letter.textContent = String.fromCharCode(65 + index);
+
+        const text = document.createElement("span");
+        text.textContent = option;
+
+        button.appendChild(letter);
+        button.appendChild(text);
+
+        button.addEventListener("click", () => {
+            chooseAnswer(index);
+        });
+
+        $("answers").appendChild(button);
+
+    });
+
+    $("progress").style.width =
+        `${(current / missions.length) * 100}%`;
+
+    updateStats();
+}
+
+
+// VERIFICAR RESPOSTA
+
+function chooseAnswer(selected) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const m = missions[current];
+
+    const buttons = [
+        ...$("answers").querySelectorAll("button")
+    ];
+
+    buttons.forEach((button, index) => {
+
+        button.disabled = true;
+
+        if (index === m.answer) {
+            button.classList.add("correct");
+        }
+
+        if (index === selected && selected !== m.answer) {
+            button.classList.add("wrong");
+        }
+
+    });
+
+    const feedback = $("feedback");
+
+    if (selected === m.answer) {
+
+        score += 10;
+        hits++;
+
+        feedback.className = "feedback show good";
+
+        feedback.textContent =
+            `✅ Resposta correta! +10 pontos. ${m.explanation}`;
+
+    } else {
+
+        score -= 5;
+
+        feedback.className = "feedback show bad";
+
+        feedback.textContent =
+            `❌ Não foi dessa vez! -5 pontos. ${m.explanation}`;
+
+    }
+
+    updateStats();
+
+    $("nextBtn").disabled = false;
+
+}
+
+
+// ATUALIZAR PONTUAÇÃO
+
+function updateStats() {
+
+    $("score").textContent = score;
+
+    $("hits").textContent = hits;
+
+    $("missionCount").textContent =
+        `${Math.min(current + 1, missions.length)}/${missions.length}`;
+
+}
+
+
+// FINALIZAR JOGO
+
+function finishGame() {
+
+    $("gameArea").classList.add("hidden");
+
+    $("endArea").classList.remove("hidden");
+
+    $("progress").style.width = "100%";
+
+    $("finalScore").textContent = `${score} pts`;
+
+    let message =
+        "Continue praticando: cada problema é uma oportunidade de aprender.";
+
+    if (hits === missions.length) {
+
+        message =
+            "Excelente! Você acertou todas as missões e demonstrou atenção aos detalhes.";
+
+    } else if (hits >= 5) {
+
+        message =
+            "Muito bom trabalho! Você já está desenvolvendo raciocínio de diagnóstico.";
+
+    } else if (hits >= 3) {
+
+        message =
+            "Bom começo! Revise as explicações e tente novamente para melhorar sua pontuação.";
+
+    }
+
+    $("finalMessage").textContent =
+        `${message} Acertos: ${hits} de ${missions.length}.`;
+
+}
+
+
+// REINICIAR JOGO
+
+function restartGame() {
+
+    current = 0;
+    score = 0;
+    hits = 0;
+
+    $("gameArea").classList.remove("hidden");
+
+    $("endArea").classList.add("hidden");
+
+    renderMission();
+
+}
+
+
+// BOTÃO PRÓXIMA MISSÃO
+
+$("nextBtn").addEventListener("click", () => {
+
+    if (current < missions.length - 1) {
+
+        current++;
+
+        renderMission();
+
+    } else {
+
+        finishGame();
+
+    }
+
+});
+
+
+// BOTÕES DE REINICIAR
+
+$("restartSmall").addEventListener("click", restartGame);
+
+$("restartFinal").addEventListener("click", restartGame);
+
+
+// INICIAR JOGO
+
+renderMission();
+
+</script>
+
+</body>
+</html>
