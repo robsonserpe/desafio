@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Desafio do Técnico</title>
 
 <style>
@@ -19,7 +20,9 @@
     --line: #dce5ef;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -227,6 +230,7 @@ h2 {
     display: flex;
     gap: 11px;
     align-items: center;
+    line-height: 1.4;
 }
 
 .answer:hover:not(:disabled) {
@@ -394,6 +398,16 @@ footer {
         padding: 17px;
     }
 }
+
+@media(max-width:420px) {
+    .stat small {
+        font-size: 9px;
+    }
+
+    .stat strong {
+        font-size: 18px;
+    }
+}
 </style>
 </head>
 
@@ -401,24 +415,30 @@ footer {
 
 <header>
     <div class="top">
+
         <div class="brand">
+
             <div class="brand-icon">🛠️</div>
+
             <div>
                 <div class="eyebrow">Laboratório de tecnologia</div>
                 <h1>Desafio do Técnico</h1>
             </div>
+
         </div>
 
         <p>
             Investigue problemas, escolha soluções e descubra como
             hardware, software e inteligência artificial podem trabalhar juntos.
         </p>
+
     </div>
 </header>
 
 <main>
 
     <section class="dashboard">
+
         <div class="stat">
             <small>Pontuação</small>
             <strong id="score">0</strong>
@@ -433,6 +453,7 @@ footer {
             <small>Acertos</small>
             <strong id="hits">0</strong>
         </div>
+
     </section>
 
     <div class="progress-wrap">
@@ -444,8 +465,13 @@ footer {
         <article class="panel">
 
             <div class="mission-top">
+
                 <span class="tag" id="category">HARDWARE</span>
-                <span class="mission-number" id="missionLabel">MISSÃO 01</span>
+
+                <span class="mission-number" id="missionLabel">
+                    MISSÃO 01
+                </span>
+
             </div>
 
             <h2 id="title"></h2>
@@ -453,12 +479,14 @@ footer {
             <p class="scenario" id="scenario"></p>
 
             <div class="visual">
+
                 <div class="emoji" id="emoji">🖥️</div>
 
                 <div>
                     <strong id="visualTitle"></strong>
                     <span id="visualText"></span>
                 </div>
+
             </div>
 
             <div class="question" id="question"></div>
@@ -468,6 +496,7 @@ footer {
             <div id="feedback" class="feedback" role="status"></div>
 
             <div class="actions">
+
                 <button class="secondary" id="restartSmall">
                     ↻ Reiniciar
                 </button>
@@ -475,6 +504,7 @@ footer {
                 <button class="primary" id="nextBtn" disabled>
                     Próxima missão →
                 </button>
+
             </div>
 
         </article>
@@ -490,6 +520,7 @@ footer {
             </p>
 
             <div class="tip">
+
                 <strong>📌 Regras do desafio</strong>
 
                 <ul>
@@ -498,18 +529,22 @@ footer {
                     <li>Cada missão só pode ser respondida uma vez.</li>
                     <li>Leia a explicação após responder.</li>
                 </ul>
+
             </div>
 
             <div class="tip">
+
                 <strong>💡 Dica de programação</strong>
 
                 <p>
                     O JavaScript controla as perguntas, verifica
                     a alternativa escolhida e atualiza a pontuação.
                 </p>
+
             </div>
 
             <div class="tip">
+
                 <strong>🧠 IA com responsabilidade</strong>
 
                 <p>
@@ -517,9 +552,11 @@ footer {
                     explicar assuntos e sugerir caminhos. Pessoas devem
                     conferir informações importantes e proteger seus dados.
                 </p>
+
             </div>
 
         </aside>
+
     </section>
 
     <section id="endArea" class="panel center hidden">
@@ -528,7 +565,9 @@ footer {
 
         <h2>Missões concluídas!</h2>
 
-        <p>Você terminou o expediente no laboratório de tecnologia.</p>
+        <p>
+            Você terminou o expediente no laboratório de tecnologia.
+        </p>
 
         <div class="final-score" id="finalScore">0</div>
 
@@ -546,9 +585,12 @@ footer {
     Atividade educativa • Hardware • Software • Inteligência Artificial
 </footer>
 
+
 <script>
 
-// BANCO DE MISSÕES DO JOGO
+// =====================================
+// BANCO DE MISSÕES
+// =====================================
 
 const missions = [
 
@@ -556,149 +598,200 @@ const missions = [
     category: "HARDWARE",
     title: "O computador não liga",
     emoji: "🔌",
+
     visualTitle: "Chamado #001 — Estação sem energia",
-    visualText: "O computador não apresenta luzes nem sinais de funcionamento.",
-    scenario: "Uma pessoa aperta o botão de ligar, mas nada acontece. Antes de pensar em defeito interno, é importante verificar os itens mais simples.",
-    question: "Qual deve ser a primeira verificação?",
+    visualText: "O computador não apresenta sinais de funcionamento.",
+
+    scenario: "Um funcionário aperta o botão de ligar, mas o computador permanece desligado. Ele informa que utilizou o equipamento normalmente no dia anterior.",
+
+    question: "Qual procedimento deve ser realizado inicialmente?",
+
     options: [
-        "Verificar se o cabo de energia está conectado e se a tomada funciona.",
-        "Formatar o computador imediatamente.",
-        "Apagar os arquivos temporários.",
-        "Trocar o papel de parede."
+        "Verificar se o sistema operacional está atualizado.",
+        "Conferir a alimentação elétrica e as conexões externas.",
+        "Executar uma limpeza nos arquivos temporários.",
+        "Alterar as configurações de inicialização do sistema."
     ],
-    answer: 0,
-    explanation: "Correto! Verificar a alimentação elétrica e as conexões externas é um primeiro passo simples e seguro. Formatar o sistema não resolveria a falta de energia."
+
+    answer: 1,
+
+    explanation: "A alimentação elétrica deve ser verificada primeiro. Sem energia, o computador não consegue iniciar, independentemente das condições do sistema operacional."
 },
 
 {
     category: "HARDWARE",
     title: "Computador liga, mas não aparece imagem",
     emoji: "🖥️",
+
     visualTitle: "Chamado #002 — Tela sem imagem",
-    visualText: "O gabinete parece ligado, mas o monitor está escuro.",
-    scenario: "O computador apresenta sinais de funcionamento, porém o monitor não mostra imagem. O técnico precisa começar pelas conexões e configurações básicas.",
-    question: "Qual alternativa faz mais sentido investigar primeiro?",
+    visualText: "O gabinete apresenta sinais de funcionamento.",
+
+    scenario: "O computador liga, os ventiladores funcionam, mas o monitor permanece sem imagem. O usuário afirma que não houve queda ou impacto no equipamento.",
+
+    question: "Qual hipótese merece ser investigada primeiro?",
+
     options: [
-        "Aumentar o volume dos alto-falantes.",
-        "Conferir se o monitor está ligado e se o cabo de vídeo está conectado corretamente.",
-        "Excluir documentos da pasta Downloads.",
-        "Alterar a senha do usuário."
+        "Possível falha na inicialização do navegador.",
+        "Problema relacionado ao espaço de armazenamento.",
+        "Configuração incorreta da impressora padrão.",
+        "Falha na conexão de vídeo ou na entrada selecionada do monitor."
     ],
-    answer: 1,
-    explanation: "Isso mesmo! Conferir a energia do monitor, a entrada selecionada e o cabo de vídeo ajuda a localizar problemas simples de conexão."
+
+    answer: 3,
+
+    explanation: "O funcionamento do gabinete não garante que o sinal de vídeo esteja chegando ao monitor. As conexões e a entrada selecionada são verificações iniciais importantes."
 },
 
 {
     category: "SOFTWARE",
     title: "O computador está muito lento",
     emoji: "🐢",
+
     visualTitle: "Chamado #003 — Lentidão",
-    visualText: "Os programas demoram para abrir e o computador responde devagar.",
-    scenario: "Uma pessoa relata que o computador ficou lento. Há muitos programas abertos e várias janelas iniciam junto com o sistema.",
-    question: "Qual ação inicial é mais adequada?",
+    visualText: "Os programas demoram para responder.",
+
+    scenario: "Um estudante percebe que seu computador está lento. Ao observar o equipamento, o técnico identifica diversos programas abertos e aplicativos iniciando junto com o sistema.",
+
+    question: "Qual investigação pode ajudar a identificar a causa?",
+
     options: [
-        "Instalar vários programas desconhecidos.",
-        "Desligar o monitor e continuar usando.",
-        "Verificar os programas abertos e os que iniciam automaticamente.",
-        "Compartilhar a senha com um colega."
+        "Analisar o consumo de memória e processamento pelos programas.",
+        "Alterar a resolução da tela para um valor menor.",
+        "Modificar o papel de parede e os ícones da área de trabalho.",
+        "Desativar os recursos de áudio do computador."
     ],
-    answer: 2,
-    explanation: "Correto! Observar os programas em execução e os que iniciam com o sistema pode ajudar a identificar o que está consumindo recursos."
+
+    answer: 0,
+
+    explanation: "O consumo de memória RAM e processamento pode explicar a lentidão. O monitoramento dos recursos ajuda a identificar os programas responsáveis."
 },
 
 {
     category: "REDE",
     title: "Sem conexão com a internet",
     emoji: "🌐",
+
     visualTitle: "Chamado #004 — Rede indisponível",
-    visualText: "O navegador informa que não foi possível acessar a página.",
-    scenario: "Um estudante não consegue abrir sites. Outras pessoas também relatam dificuldade de conexão na mesma rede.",
-    question: "Qual é uma boa primeira atitude?",
+    visualText: "O navegador não consegue acessar páginas.",
+
+    scenario: "Um laboratório inteiro apresenta dificuldades para acessar a internet. Os computadores estão ligados e os cabos de rede parecem conectados.",
+
+    question: "Qual hipótese deve ser investigada?",
+
     options: [
-        "Apagar todos os arquivos do computador.",
-        "Verificar a conexão Wi-Fi/cabo e observar se o roteador indica conexão.",
-        "Enviar a senha da rede em uma rede social.",
-        "Desinstalar o teclado."
+        "Possível falha na configuração do teclado.",
+        "Problema na resolução de vídeo dos monitores.",
+        "Possível indisponibilidade do roteador ou da conexão principal.",
+        "Erro na configuração do plano de fundo do Windows."
     ],
-    answer: 1,
-    explanation: "Muito bem! Conferir a conexão do dispositivo e os indicadores do roteador ajuda a entender se o problema está no computador ou na rede."
+
+    answer: 2,
+
+    explanation: "Quando vários computadores apresentam o mesmo problema, é importante investigar os equipamentos e serviços compartilhados da rede."
 },
 
 {
     category: "SEGURANÇA DIGITAL",
     title: "Uma mensagem suspeita",
     emoji: "🛡️",
+
     visualTitle: "Chamado #005 — Link desconhecido",
-    visualText: "Uma mensagem promete um prêmio e pede senha e dados pessoais.",
-    scenario: "Chega uma mensagem inesperada com um link. Ela diz que a conta será bloqueada se a pessoa não informar seus dados imediatamente.",
-    question: "Como agir com mais segurança?",
+    visualText: "Uma mensagem informa que uma conta será bloqueada.",
+
+    scenario: "Um aluno recebe uma mensagem dizendo que ganhou um prêmio. Para recebê-lo, precisa acessar um link e informar sua senha e seus dados pessoais.",
+
+    question: "Qual atitude representa uma prática segura?",
+
     options: [
-        "Clicar rapidamente para não perder o prêmio.",
-        "Informar a senha para confirmar a identidade.",
-        "Encaminhar a mensagem para todos os contatos.",
-        "Não clicar, verificar o remetente e procurar o serviço pelo endereço oficial."
+        "Abrir o link em outro navegador para testar.",
+        "Verificar a origem da mensagem e acessar o serviço pelo endereço oficial.",
+        "Informar apenas a senha, sem fornecer outros dados.",
+        "Encaminhar a mensagem para colegas verificarem."
     ],
-    answer: 3,
-    explanation: "Perfeito! Mensagens urgentes que pedem dados podem ser tentativas de golpe. Acesse serviços digitando o endereço oficial e nunca compartilhe senhas."
+
+    answer: 1,
+
+    explanation: "A mensagem apresenta características de uma tentativa de golpe. A origem deve ser verificada e o serviço acessado por seus canais oficiais."
 },
 
 {
     category: "INTELIGÊNCIA ARTIFICIAL",
     title: "O assistente de IA",
     emoji: "🤖",
+
     visualTitle: "Chamado #006 — Muitas tarefas, pouco tempo",
-    visualText: "Uma equipe precisa organizar tarefas e preparar um resumo.",
-    scenario: "Uma equipe usa um assistente de IA para resumir textos, organizar uma lista de tarefas e sugerir um cronograma. A ferramenta apresenta uma resposta, mas pode cometer erros.",
-    question: "Qual é a melhor forma de usar esse assistente?",
+    visualText: "Uma equipe deseja automatizar algumas atividades.",
+
+    scenario: "Uma empresa utiliza um assistente de inteligência artificial para resumir documentos, organizar tarefas e responder perguntas. Em determinada situação, o sistema apresenta uma informação incorreta.",
+
+    question: "Como a equipe deve proceder?",
+
     options: [
-        "Aceitar tudo sem ler, porque a IA nunca erra.",
-        "Enviar senhas e dados pessoais para receber respostas melhores.",
-        "Usar as sugestões como apoio, conferir informações e não compartilhar dados sensíveis.",
-        "Deixar a IA tomar todas as decisões sem supervisão."
+        "Desconsiderar qualquer resultado produzido pela ferramenta.",
+        "Permitir que o sistema continue trabalhando sem supervisão.",
+        "Revisar a informação e conferir sua confiabilidade antes de utilizá-la.",
+        "Compartilhar o resultado sem verificar sua origem."
     ],
+
     answer: 2,
-    explanation: "Excelente! A IA pode agilizar tarefas e apoiar decisões, mas seus resultados precisam ser avaliados por pessoas. Privacidade e conferência continuam importantes."
+
+    explanation: "A inteligência artificial pode cometer erros. A revisão humana e a conferência das informações são fundamentais para um uso responsável."
 },
 
 {
     category: "INTELIGÊNCIA ARTIFICIAL",
     title: "Bots que ajudam no dia a dia",
     emoji: "💬",
-    visualTitle: "Chamado #007 — Atendimento mais rápido",
-    visualText: "Uma loja quer responder dúvidas frequentes de clientes.",
-    scenario: "Uma organização pensa em usar um bot para responder perguntas comuns, informar horários e encaminhar casos complexos para uma pessoa.",
-    question: "Qual proposta é mais responsável e útil?",
+
+    visualTitle: "Chamado #007 — Atendimento automatizado",
+    visualText: "Uma organização deseja agilizar o atendimento.",
+
+    scenario: "Uma instituição pretende utilizar um bot para responder dúvidas frequentes, consultar informações e encaminhar solicitações mais complexas para funcionários.",
+
+    question: "Qual característica deve fazer parte desse projeto?",
+
     options: [
-        "O bot deve se identificar como assistente virtual, proteger os dados e permitir atendimento humano quando necessário.",
-        "O bot deve fingir ser uma pessoa e pedir a senha dos clientes.",
-        "O bot deve publicar todas as conversas para mostrar transparência.",
-        "O bot deve inventar respostas quando não souber."
+        "Identificar o bot como assistente virtual e permitir encaminhamento humano.",
+        "Fazer o bot responder qualquer pergunta, mesmo sem conhecer o assunto.",
+        "Solicitar senhas dos usuários para personalizar o atendimento.",
+        "Impedir que os usuários conversem com funcionários."
     ],
+
     answer: 0,
-    explanation: "Isso mesmo! Bots podem agilizar atendimentos, mas devem ser transparentes, proteger informações e encaminhar situações que precisam de julgamento humano."
+
+    explanation: "Bots podem agilizar tarefas repetitivas, mas devem ser transparentes e permitir atendimento humano quando a situação exigir."
 },
 
 {
     category: "DESAFIO FINAL",
     title: "O técnico do futuro",
     emoji: "🚀",
+
     visualTitle: "Chamado #008 — Tecnologia trabalhando em equipe",
-    visualText: "Um laboratório combina computadores, programas e ferramentas de IA.",
-    scenario: "Você precisa propor uma solução para um laboratório escolar. A equipe quer computadores funcionando bem, arquivos organizados e ajuda rápida para dúvidas comuns.",
-    question: "Qual solução combina melhor tecnologia e responsabilidade?",
+    visualText: "Um laboratório deseja modernizar sua estrutura.",
+
+    scenario: "Uma escola pretende melhorar seus computadores, proteger os arquivos e utilizar ferramentas de inteligência artificial para auxiliar professores e estudantes.",
+
+    question: "Qual planejamento apresenta a melhor combinação de recursos?",
+
     options: [
-        "Usar um único computador para tudo e não fazer cópias de segurança.",
-        "Manter equipamentos e programas atualizados, fazer cópias de segurança e usar IA como apoio com revisão humana.",
-        "Instalar qualquer programa encontrado na internet.",
-        "Permitir que qualquer pessoa acesse as contas de todos."
+        "Priorizar novos equipamentos e deixar a segurança para depois.",
+        "Automatizar todas as atividades e eliminar a revisão humana.",
+        "Instalar ferramentas variadas sem avaliar sua procedência.",
+        "Combinar manutenção, segurança, cópias de arquivos e IA supervisionada."
     ],
-    answer: 1,
-    explanation: "Missão cumprida! Um ambiente confiável combina manutenção, atualização, cópias de segurança, cuidado com dados e uso consciente da IA."
+
+    answer: 3,
+
+    explanation: "A tecnologia funciona melhor quando hardware, software, segurança e inteligência artificial são utilizados de maneira integrada e responsável."
 }
 
 ];
 
+
+// =====================================
 // VARIÁVEIS DO JOGO
+// =====================================
 
 let current = 0;
 let score = 0;
@@ -708,7 +801,9 @@ let answered = false;
 const $ = (id) => document.getElementById(id);
 
 
+// =====================================
 // MOSTRAR MISSÃO
+// =====================================
 
 function renderMission() {
 
@@ -751,10 +846,14 @@ function renderMission() {
         button.className = "answer";
 
         const letter = document.createElement("span");
+
         letter.className = "letter";
-        letter.textContent = String.fromCharCode(65 + index);
+
+        letter.textContent =
+            String.fromCharCode(65 + index);
 
         const text = document.createElement("span");
+
         text.textContent = option;
 
         button.appendChild(letter);
@@ -772,10 +871,13 @@ function renderMission() {
         `${(current / missions.length) * 100}%`;
 
     updateStats();
+
 }
 
 
+// =====================================
 // VERIFICAR RESPOSTA
+// =====================================
 
 function chooseAnswer(selected) {
 
@@ -833,7 +935,9 @@ function chooseAnswer(selected) {
 }
 
 
+// =====================================
 // ATUALIZAR PONTUAÇÃO
+// =====================================
 
 function updateStats() {
 
@@ -847,7 +951,9 @@ function updateStats() {
 }
 
 
+// =====================================
 // FINALIZAR JOGO
+// =====================================
 
 function finishGame() {
 
@@ -885,7 +991,9 @@ function finishGame() {
 }
 
 
+// =====================================
 // REINICIAR JOGO
+// =====================================
 
 function restartGame() {
 
@@ -902,7 +1010,9 @@ function restartGame() {
 }
 
 
+// =====================================
 // BOTÃO PRÓXIMA MISSÃO
+// =====================================
 
 $("nextBtn").addEventListener("click", () => {
 
@@ -921,14 +1031,18 @@ $("nextBtn").addEventListener("click", () => {
 });
 
 
+// =====================================
 // BOTÕES DE REINICIAR
+// =====================================
 
 $("restartSmall").addEventListener("click", restartGame);
 
 $("restartFinal").addEventListener("click", restartGame);
 
 
+// =====================================
 // INICIAR JOGO
+// =====================================
 
 renderMission();
 
